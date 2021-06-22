@@ -180,6 +180,7 @@ initFs:
 
 prometheusExporter:
   enabled: true
+  version: "0.15.0"
   config:
     rules:
       - pattern: ".*"
@@ -201,13 +202,11 @@ prometheusExporter:
 #    - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
 plugins:
   install:
-    - "https://github.com/mc1arke/sonarqube-community-branch-plugin/releases/download/1.8.0/sonarqube-community-branch-plugin-1.8.0.jar"
     - "https://github.com/mulesoft-catalyst/mule-sonarqube-plugin/releases/download/1.0.4/mule-validation-sonarqube-plugin-1.0.4-mule.jar"
     - "https://github.com/mulesoft-catalyst/mule-sonarqube-plugin/releases/download/1.0.4/rules-3.xml"
     - "https://github.com/mulesoft-catalyst/mule-sonarqube-plugin/releases/download/1.0.4/rules-4.xml"
-  lib:
-    - "rules-3.xml"
-    - "rules-4.xml"
+    - "https://github.com/mc1arke/sonarqube-community-branch-plugin/releases/download/1.8.0/sonarqube-community-branch-plugin-1.8.0.jar"
+  lib: []
 
   # For use behind a corporate proxy when downloading plugins
   # httpProxy: ""
@@ -226,10 +225,10 @@ plugins:
 ## Values to add to SONARQUBE_WEB_JVM_OPTS
 ##
 # jvmOpts: "-Djava.net.preferIPv4Stack=true"
-jvmOpts: ""
+jvmOpts: "-javaagent:./extensions/plugins/sonarqube-community-branch-plugin-1.8.0.jar=web"
 
 ## Values to add to SONAR_CE_JAVAOPTS
-jvmCeOpts: ""
+jvmCeOpts: "-javaagent:./extensions/plugins/sonarqube-community-branch-plugin-1.8.0.jar=ce"
 
 ## a monitoring passcode needs to be defined in order to get reasonable probe results
 # not setting the monitoring passcode will result in a deployment that will never be ready
@@ -291,9 +290,6 @@ emptyDir: {}
 #   sonar.forceAuthentication: true
 #   sonar.security.realm: LDAP
 #   ldap.url: ldaps://organization.com
-#sonarProperties:
-#    sonar.web.javaAdditionalOpts: "-javaagent:./extensions/plugins/sonarqube-community-branch-plugin-1.8.0.jar=web"
-#    sonar.ce.javaAdditionalOpts: "-javaagent:./extensions/plugins/sonarqube-community-branch-plugin-1.8.0.jar=ce"
 
 # Additional sonar properties to load from a secret with a key "secret.properties" (must be a string)
 # sonarSecretProperties:
